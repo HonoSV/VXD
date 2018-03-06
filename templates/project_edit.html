@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>project_edit</title>
+    <style>
+        .hide{
+            display: none;
+        }
+        .shade{
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: black;
+            opacity: 0.6;
+            z-index: 100;
+        }
+        .add-modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 100px;
+            left: 50%;
+            z-index: 101;
+            border: 1px solid red;
+            background: white;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+<h3>项目管理</h3>
+<div>
+    <input id="add_project" type="button" value="添加新项目" />
+</div>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>项目序号</th>
+            <th>项目名称</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in obj %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.P_name }}</td>
+            <td><a href="#">删除</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+    <div class="shade hide"></div>
+    <div class="add-modal hide">
+        <form method="post" action="/taskmana/project_edit/">
+        <div class="main">
+            <input type="text" placeholder="项目名" name="P_name"/>
+        </div>
+        <input type="submit" value="添加"/>
+        <input id="cancel" type="button" value="取消"/>
+        </form>
+    </div>
+
+    <script src="/static/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+            $('#add_project').click(function () {
+                $('.shade,.add-modal').removeClass('hide');
+            });
+
+            $('#cancel').click(function () {
+                $('.shade,.add-modal').addClass('hide');
+            });
+
+        });
+    </script>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>project_edit</title>
+    <style>
+        .hide{
+            display: none;
+        }
+        .shade{
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: black;
+            opacity: 0.6;
+            z-index: 100;
+        }
+        .add-modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 100px;
+            left: 50%;
+            z-index: 101;
+            border: 1px solid red;
+            background: white;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+<h3>版本管理</h3>
+<div>
+    <input id="add_task" type="button" value="添加新版本" />
+</div>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>版本序号</th>
+            <th>所属项目</th>
+            <th>版本名称</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in obj %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.P_task.P_name }}</td>
+            <td>{{ row.T_name }}</td>
+            <td><a href="#">删除</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+    <div class="shade hide"></div>
+    <div class="add-modal hide">
+        <form method="post" action="/taskmana/task_edit/">
+        <div class="main">
+            <input type="text" placeholder="版本名称" name="T_name"/>
+        </div>
+        <div class="main">
+            <select name="P_id">
+                {% for op in p_list %}
+                <option value={{ op.id }}>{{ op.P_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="添加"/>
+        <input id="cancel" type="button" value="取消"/>
+        </form>
+    </div>
+
+    <script src="/static/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+            $('#add_task').click(function () {
+                $('.shade,.add-modal').removeClass('hide');
+            });
+
+            $('#cancel').click(function () {
+                $('.shade,.add-modal').addClass('hide');
+            });
+
+        });
+    </script>
+</table>
+
+</body>
+</html>

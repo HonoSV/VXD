@@ -5,7 +5,8 @@ from django.contrib import admin
 from TaskManagement import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
     url(r'^welcome-(?P<nid>\w+)/', views.welcome),
+    url(r'^project_edit/', views.project_edit),
+    url(r'^task_edit/', views.task_edit),
 ]
