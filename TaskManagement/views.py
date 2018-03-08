@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from TaskManagement import  models
+from django.shortcuts import render, redirect, HttpResponse
+from TaskManagement import models
 # Create your views here.
 
 
@@ -46,3 +46,27 @@ def task_edit(request):
         p_id = request.POST.get('P_id')
         models.Task.objects.create(T_name=t_name, P_task_id=p_id)
         return redirect('/taskmana/task_edit/')
+
+
+def test_ajax(request):
+    t_name = request.POST.get('t_name')
+    sel = request.POST.get('sel')
+    if t_name:
+        models.Task.objects.create(T_name=t_name, P_task_id=sel)
+        return HttpResponse('OK')
+    else:
+        return HttpResponse('No task name')
+
+
+def project(request, nid):
+    prj_list = models.Project.objects.all()
+    task_list = models.Task.objects.filter(P_task_id=nid).all()
+    return render(request, 'welcome.html', {'prj_list': prj_list, 'task_list': task_list})
+
+
+def task_detail(request, nid):
+    if request.method == 'GET':
+        obj = models.Detail.objects.filter(id=nid).all()
+        return render(request, 'task_detail.html', {'obj': obj})
+    else:
+        pass

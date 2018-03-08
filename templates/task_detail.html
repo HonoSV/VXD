@@ -21,7 +21,7 @@
             position: fixed;
             height: 300px;
             width: 400px;
-            top: 300px;
+            top: 100px;
             left: 50%;
             z-index: 101;
             border: 1px solid red;
@@ -31,46 +31,48 @@
     </style>
 </head>
 <body>
-<h3>版本管理</h3>
+<h3>任务进度</h3>
 <div>
-    <input id="add_task" type="button" value="添加新版本" />
+    <input id="add_project" type="button" value="添加新任务" />
 </div>
 
 <table border="1">
     <thead>
         <tr>
-            <th>版本序号</th>
-            <th>所属项目</th>
-            <th>版本名称</th>
-            <th>Delete</th>
+            <th>序号</th>
+            <th>标题</th>
+            <th>策划</th>
+            <th>开发</th>
+            <th>测试</th>
+            <th>测试</th>
+            <th>测试状态</th>
+            <th>备注</th>
+            <th>Edit</th>
         </tr>
     </thead>
     <tbody>
     {% for row in obj %}
         <tr>
             <td>{{ row.id }}</td>
-            <td>{{ row.P_task.P_name }}</td>
-            <td>{{ row.T_name }}</td>
-            <td><a href="#">删除</a></td>
+            <td>{{ row.title }}</td>
+            <td>{{ row.G_designer }}</td>
+            <td>{{ row.G_developer }}</td>
+            <td>{{ row.T_manager1 }}</td>
+            <td>{{ row.T_manager2 }}</td>
+            <td>{{ row.T_process.plan }}</td>
+            <td>{{ row.remarks }}</td>
+            <td><a href="#">编辑</a></td>
         </tr>
     {% endfor %}
     </tbody>
 
     <div class="shade hide"></div>
     <div class="add-modal hide">
-        <form method="post" action="/taskmana/task_edit/">
+        <form method="post" action="/taskmana/project_edit/">
         <div class="main">
-            <input id="t_name" type="text" placeholder="版本名称" name="T_name"/>
-        </div>
-        <div class="main">
-            <select id="sel" name="P_id">
-                {% for op in p_list %}
-                <option value={{ op.id }}>{{ op.P_name }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" placeholder="项目名" name="P_name"/>
         </div>
         <input type="submit" value="添加"/>
-        <a id="ajax_submit" style="display: inline-block;padding: 5px;background: blue;color: white; ">ajax</a>
         <input id="cancel" type="button" value="取消"/>
         </form>
     </div>
@@ -79,28 +81,12 @@
     <script>
         $(function () {
 
-            $('#add_task').click(function () {
+            $('#add_project').click(function () {
                 $('.shade,.add-modal').removeClass('hide');
             });
 
             $('#cancel').click(function () {
                 $('.shade,.add-modal').addClass('hide');
-            });
-
-            $('#ajax_submit').click(function(){
-                $.ajax({
-                    url: "/taskmana/test_ajax/",
-                    type: "POST",
-                    data: {'t_name': $('#t_name').val(), 'sel': $('#sel').val()},
-                    success: function(data){
-                        if(data=='OK'){
-                            location.reload()
-                        }else{
-                            alert(data)
-                        }
-
-                    }
-                });
             });
 
         });
