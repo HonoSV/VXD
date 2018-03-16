@@ -49,24 +49,46 @@
         <tr>
             <td>{{ row.id }}</td>
             <td>{{ row.P_name }}</td>
-            <td><a href="#">删除</a></td>
+            <td><input id="del" onclick="deleteIt({{ row.id }})" type="button" value="删除"/></td>
         </tr>
     {% endfor %}
     </tbody>
+
+    <a href="/taskmana/project-1/">返回</a>
 
     <div class="shade hide"></div>
     <div class="add-modal hide">
         <form method="post" action="/taskmana/project_edit/">
         <div class="main">
-            <input type="text" placeholder="项目名" name="P_name"/>
+            <input type="text" id="P_name" placeholder="项目名" name="P_name"/>
         </div>
-        <input type="submit" value="添加"/>
+        <input type="submit" id="ajax_submit" value="添加"/>
         <input id="cancel" type="button" value="取消"/>
         </form>
     </div>
 
     <script src="/static/jquery.min.js"></script>
     <script>
+         function deleteIt(id) {
+            if (window.confirm("您确认删除该条记录吗？")) {
+            var post_data = {
+                "project_id": id
+            };
+            $.ajax({
+                url: '/taskmana/project_delete/',
+                type: 'POST',
+                data: post_data,
+                dataType: 'json',
+                success: function (data) {
+                    alert(data["status"]);
+                    window.location.reload(true);//数据删除后，进行页面刷新
+                }
+            });
+        } else {
+            alert("删除失败");
+        }
+    }
+
         $(function () {
 
             $('#add_project').click(function () {
@@ -75,6 +97,23 @@
 
             $('#cancel').click(function () {
                 $('.shade,.add-modal').addClass('hide');
+            });
+
+            $('#ajax_submit').click(function(){
+                $.ajax({
+                    url: "/taskmana/project_ajax/",
+                    type: "POST",
+                    data: {'p_name': $('#P_name').val()},
+                    success: function(data){
+                        var obj = JSON.parse(data);
+                        if(obj.status){
+                            location.reload()
+                        }else{
+                            alert(obj.error)
+                        }
+
+                    }
+                });
             });
 
         });

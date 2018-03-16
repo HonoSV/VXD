@@ -28,6 +28,17 @@
             background: white;
             margin-left: -200px;
         }
+        .second{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 300px;
+            left: 50%;
+            z-index: 102;
+            border: 1px solid red;
+            background: white;
+            margin-left: -200px;
+        }
     </style>
 </head>
 <body>
@@ -51,10 +62,13 @@
             <td>{{ row.id }}</td>
             <td>{{ row.P_task.P_name }}</td>
             <td>{{ row.T_name }}</td>
-            <td><a href="#">删除</a></td>
+            <td><input id="del" onclick="deleteIt({{ row.id }})"  type="button" value="删除" /></td>
         </tr>
     {% endfor %}
     </tbody>
+
+    <a href="/taskmana/project-1/">返回</a>
+
 
     <div class="shade hide"></div>
     <div class="add-modal hide">
@@ -69,14 +83,40 @@
                 {% endfor %}
             </select>
         </div>
-        <input type="submit" value="添加"/>
-        <a id="ajax_submit" style="display: inline-block;padding: 5px;background: blue;color: white; ">ajax</a>
+        <input id="ajax_submit" type="submit" value="添加"/>
+{#        <a  style="display: inline-block;padding: 5px;background: blue;color: white; ">ajax</a>#}
         <input id="cancel" type="button" value="取消"/>
         </form>
     </div>
+    <div class="second hide">
+        <input id="yes" type="submit" value="确定"/>
+        <input id="no" type="button" value="取消"/>
+    </div>
+
+
 
     <script src="/static/jquery.min.js"></script>
     <script>
+        function deleteIt(id) {
+            if (window.confirm("您确认删除该条记录吗？")) {
+            var post_data = {
+                "task_id": id
+            };
+            $.ajax({
+                url: '/taskmana/task_delete/',
+                type: 'POST',
+                data: post_data,
+                dataType: 'json',
+                success: function (data) {
+                    alert(data["status"]);
+                    window.location.reload(true);//数据删除后，进行页面刷新
+                }
+            });
+        } else {
+            alert("删除失败");
+        }
+    }
+
         $(function () {
 
             $('#add_task').click(function () {
@@ -87,16 +127,35 @@
                 $('.shade,.add-modal').addClass('hide');
             });
 
+{#            $('#del').click(function () {#}
+{#                $('.shade,.second').removeClass('hide');#}
+{#            });#}
+{##}
+{#            $('#no').click(function () {#}
+{#                $('.shade,.second').addClass('hide');#}
+{#            });#}
+{##}
+{#            $('#yes').click(function(){#}
+{#                $.ajax({#}
+{#                    url: "/taskmana/delete_task/",#}
+{#                    type: "POST",#}
+{#                    data: {'task_id': $('#task_id').val()},#}
+{#                    success: function(data){#}
+{#                    }#}
+{#                });#}
+{#            });#}
+
             $('#ajax_submit').click(function(){
                 $.ajax({
                     url: "/taskmana/test_ajax/",
                     type: "POST",
                     data: {'t_name': $('#t_name').val(), 'sel': $('#sel').val()},
                     success: function(data){
-                        if(data=='OK'){
+                        var obj = JSON.parse(data);
+                        if(obj.status){
                             location.reload()
                         }else{
-                            alert(data)
+                            alert(obj.error)
                         }
 
                     }
