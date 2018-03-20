@@ -1,0 +1,50 @@
+body{
+    background: #F0FFFF;
+}
+input{
+    border-radius: 1px;
+}
+.base{
+    width: 1400px;
+    margin: 0 auto;
+}
+.title{
+    width: 1400px;
+    float: left;
+}
+
+.button{
+    float: left;
+    width: 1400px;
+
+}
+.excel {
+    float: left;
+    width: 1400px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+table{
+    width: 50%;
+    border-collapse:collapse;
+}
+.main{
+    margin-top: 50px;
+    margin-left: 50px;
+}
+.button-2{
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+}
+.sb-1{
+    float: left;
+}
+.sb-1{
+    float: right;
+}
+#P_name,#t_name{
+    width: 298px;
+}

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>project_edit</title>
+    <link rel="stylesheet" href="/static/css/edit.css"/>
     <style>
         .hide{
             display: none;
@@ -31,28 +32,35 @@
     </style>
 </head>
 <body>
-<h3>项目管理</h3>
-<div>
-    <input id="add_project" type="button" value="添加新项目" />
-</div>
+<div class="base">
+    <div class="title">
+        <h3>项目管理</h3>
+    </div>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>项目序号</th>
-            <th>项目名称</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for row in obj %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.P_name }}</td>
-            <td><input id="del" onclick="deleteIt({{ row.id }})" type="button" value="删除"/></td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <div class="button-1">
+        <input id="add_project" type="button" value="添加新项目" />
+    </div>
+
+    <div class="excel">
+        <table border="1" cellpadding="4px">
+            <thead>
+                <tr>
+                    <th>项目编号</th>
+                    <th>项目名称</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in obj %}
+                <tr>
+                    <td align="center">{{ row.id }}</td>
+                    <td align="center">{{ row.P_name }}</td>
+                    <td align="center"><input id="del" onclick="deleteIt({{ row.id }})" type="button" value="删除"/></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <a href="/taskmana/project-1/">返回</a>
 
@@ -60,14 +68,22 @@
     <div class="add-modal hide">
         <form method="post" action="/taskmana/project_edit/">
         <div class="main">
-            <input type="text" id="P_name" placeholder="项目名" name="P_name"/>
+            <input  type="text" id="P_name" placeholder="项目名" name="P_name"/>
         </div>
-        <input type="submit" id="ajax_submit" value="添加"/>
-        <input id="cancel" type="button" value="取消"/>
+        <div class="button-2">
+            <div class="sb-1">
+                <input type="submit" id="ajax_submit" value="添加"/>
+            </div>
+            <div class="sb-2">
+                <input id="cancel" type="button" value="取消"/>
+            </div>
+        </div>
         </form>
     </div>
+</div>
 
-    <script src="/static/jquery.min.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
     <script>
          function deleteIt(id) {
             if (window.confirm("您确认删除该条记录吗？")) {
@@ -118,7 +134,6 @@
 
         });
     </script>
-</table>
 
 </body>
 </html>

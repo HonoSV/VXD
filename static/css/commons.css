@@ -1,0 +1,46 @@
+body{
+    background: #F0FFFF;
+}
+.base{
+    background: #F0FFFF;
+}
+.real{
+    width: 980px;
+    margin: 300px auto;
+}
+.picture{
+    width: 540px;
+    height: 300px;
+    float: left;
+}
+.main{
+    /*border: 1px solid blue;*/
+    width: 300px;
+    height: 300px;
+    float: left;
+}
+img{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+
+}
+#password,#username{
+    border-radius: 5px;
+    width: 200px;
+    height: 24px;
+}
+#login{
+    background-color: #1E90FF;
+    border-radius: 5px;
+    width: 200px;
+    height: 48px;
+}
+.slim{
+    width: 300px;
+    height: 50px;
+}
+.gao{
+    margin: 65px auto;
+}

@@ -7,7 +7,7 @@ import json
 # µÇÂ¼½çÃæ
 def login(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        return render(request, 'login.html', {'error_msg': ''})
     elif request.method == 'POST':
         user_info = request.POST.get('username')
         pwd_info = request.POST.get('password')
@@ -16,7 +16,7 @@ def login(request):
             final = '/taskmana/welcome-' + flag.username + '/'
             return redirect(final)
         else:
-            return render(request, 'login.html')
+            return render(request, 'login.html', {'error_msg': 'RTX or password is error'})
     else:
         redirect('/taskmana/login/')
 

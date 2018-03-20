@@ -1,0 +1,31 @@
+body{
+    background: #F0FFFF;
+}
+.zero{
+    width: 1400px;
+    margin: 0 auto;
+}
+.one{
+    background-color: #76EEC6;
+    width: 1400px;
+    height: 100px;
+    margin: 0 auto;
+}
+.one-1{
+    font-size: 30px;
+    margin-left: 10px;
+    margin-top: 20px;
+    float:left;
+}
+
+.two{
+    width: 400px;
+    float: left;
+
+}
+.three{
+    border-width: 1px;
+    border-style: none none none dotted;
+    width: 900px;
+    float: left;
+}

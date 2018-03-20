@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-    <link rel="stylesheet" href="/static/commons.css" />
+    <link rel="stylesheet" href="/static/css/commons.css" />
     <style>
         label{
             width: 80px;
@@ -13,21 +13,36 @@
     </style>
 </head>
 <body>
-<form  method="post">
-    <p>
-        <label for="username">RTX</label>
-        <input id="username" name="username" type="text"/>
-    </p>
-    <p>
-        <label for="password">密码</label>
-        <input id="password" name="password" type="password"/>
-        <span style="color:red;">{{ error_msg }}</span>
-    </p>
-    <P>
-        <label> </label>
-        <input type="submit" value="登录" />
-    </P>
-</form>
-<script src="/static/jquery.min.js"></script>
+<div class="base">
+    <div class="real">
+        <div class="picture"><img src="/static/pic/DS3.jpg" alt="DarkSouls3"></div>
+        <div class="main">
+            <div class="gao">
+            <form  method="post">
+                <p>
+                <div class="slim">
+                    <label for="username">RTX</label>
+                    <input id="username" name="username" type="text"/>
+                </div>
+                </p>
+                <p>
+                <div class="slim">
+                    <label for="password">密码</label>
+                    <input id="password" name="password" type="password"/>
+                    <span style="color:red;margin-left: 85px">{{ error_msg }}</span>
+                </div>
+                </p>
+                <P>
+                <div class="slim">
+                    <label> </label>
+                    <input id='login' type="submit" value="登录" />
+                </div>
+                </P>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
 </body>
 </html>
