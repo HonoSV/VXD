@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a5b4237-5e1d-476a-9726-07d0a0bd8585" name="默认的" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/VXD.iml" afterPath="$PROJECT_DIR$/.idea/VXD.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="3a5b4237-5e1d-476a-9726-07d0a0bd8585" name="默认的" comment="默认的">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TaskManagement/admin.py" afterPath="$PROJECT_DIR$/TaskManagement/admin.py" />
-      <change beforePath="$PROJECT_DIR$/TaskManagement/migrations/0001_initial.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TaskManagement/models.py" afterPath="$PROJECT_DIR$/TaskManagement/models.py" />
-      <change beforePath="$PROJECT_DIR$/TaskManagement/urls.py" afterPath="$PROJECT_DIR$/TaskManagement/urls.py" />
-      <change beforePath="$PROJECT_DIR$/TaskManagement/views.py" afterPath="$PROJECT_DIR$/TaskManagement/views.py" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/static/css/edit.css" afterPath="$PROJECT_DIR$/static/css/edit.css" />
-      <change beforePath="$PROJECT_DIR$/templates/task_detail.html" afterPath="$PROJECT_DIR$/templates/task_detail.html" />
     </list>
     <ignored path="VXD.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -557,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521191050804</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="默认的">
+      <created>1521657198076</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1521657198076</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -618,7 +615,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add ajax" />
     <MESSAGE value="add delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="add delete" />
+    <MESSAGE value="默认的" />
+    <option name="LAST_COMMIT_MESSAGE" value="默认的" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
