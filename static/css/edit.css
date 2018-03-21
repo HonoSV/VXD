@@ -26,7 +26,7 @@ input{
     margin-bottom: 10px;
 }
 table{
-    width: 50%;
+    width: 100%;
     border-collapse:collapse;
 }
 .main{
@@ -39,12 +39,17 @@ table{
     margin-right: 50px;
 
 }
+.button-3{
+    margin-top: 50px;
+    margin-right: 50px;
+
+}
 .sb-1{
     float: left;
 }
 .sb-1{
     float: right;
 }
-#P_name,#t_name{
+#P_name,#t_name,.onlyD{
     width: 298px;
 }

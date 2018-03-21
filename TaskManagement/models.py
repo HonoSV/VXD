@@ -27,7 +27,7 @@ class JustPlan(models.Model):
 
 class Detail(models.Model):
     id = models.IntegerField(primary_key=True)
-    D_type = models.ForeignKey('Task', to_field='T_name', on_delete=models.CASCADE)
+    D_type = models.ForeignKey('Task', on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     G_designer = models.CharField(max_length=64, null=True)
     G_developer = models.CharField(max_length=64, null=True)
@@ -35,8 +35,6 @@ class Detail(models.Model):
     T_manager2 = models.CharField(max_length=64, null=True)
     T_process = models.ForeignKey('JustPlan', null=True, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=64, null=True)
-    U_time = models.DateTimeField(auto_now=True, null=True)
-
 
 
 

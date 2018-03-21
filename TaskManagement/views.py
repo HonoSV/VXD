@@ -1,10 +1,11 @@
+# -*- coding:utf-8 -*-
 from django.shortcuts import render, redirect, HttpResponse
 from TaskManagement import models
 import json
 # Create your views here.
 
 
-# µÇÂ¼½çÃæ
+# ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 def login(request):
     if request.method == 'GET':
         return render(request, 'login.html', {'error_msg': ''})
@@ -21,7 +22,7 @@ def login(request):
         redirect('/taskmana/login/')
 
 
-# Ö÷½çÃæ
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 def welcome(request, nid):
     user = models.User.objects.filter(username=nid).first()
     prj_list = models.Project.objects.all()
@@ -29,7 +30,7 @@ def welcome(request, nid):
     return render(request, 'welcome.html', {'prj_list': prj_list, 'task_list': task_list, 'user': user})
 
 
-# ÏîÄ¿¹ÜÀí½çÃæ
+# ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 def project_edit(request):
     if request.method == 'GET':
         obj = models.Project.objects.all()
@@ -40,13 +41,13 @@ def project_edit(request):
         return redirect('/taskmana/project_edit/')
 
 
-# °æ±¾¹ÜÀí½çÃæ
+# ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 def task_edit(request):
     # if request.method == 'GET':
         obj = models.Task.objects.all()
         p_list = models.Project.objects.all()
         return render(request, 'task_edit.html', {'obj': obj, 'p_list': p_list})
-    # ´Ë´¦ÒòÉ¾³ýµôpost°´Å¥£¬¹Ê²»Ó¦ÉúÐ§
+    # ï¿½Ë´ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½postï¿½ï¿½Å¥ï¿½ï¿½ï¿½Ê²ï¿½Ó¦ï¿½ï¿½Ð§
     # elif request.method == 'POST':
     #     t_name = request.POST.get('T_name')
     #     p_id = request.POST.get('P_id')
@@ -54,7 +55,7 @@ def task_edit(request):
     #     return redirect('/taskmana/task_edit/')
 
 
-# °æ±¾¹ÜÀí½çÃæ£¬Í¨¹ýajaxÐ´ÈëÊý¾Ý
+# ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬Í¨ï¿½ï¿½ajaxÐ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 def test_ajax(request):
     ret = {'status': True, 'error': None, 'data': None}
     try:
@@ -86,18 +87,54 @@ def project_ajax(request):
     return HttpResponse(json.dumps(ret))
 
 
-# Ö÷½çÃæµÄ¸÷×ÓÏîÄ¿
+def detail_ajax(request):
+    # d_title = request.POST.get('d_title')
+    # designer = request.POST.get('designer')
+    # developer = request.POST.get('developer')
+    # manager1 = request.POST.get('manager1')
+    # manager2 = request.POST.get('manager2')
+    # flag = request.POST.get('flag')
+    # print(d_title)
+    ret = {'status': True, 'error': None, 'data': None}
+    try:
+        d_title = request.POST.get('d_title')
+        designer = request.POST.get('designer')
+        developer = request.POST.get('developer')
+        manager1 = request.POST.get('manager1')
+        manager2 = request.POST.get('manager2')
+        flag = request.POST.get('flag')
+        if d_title:
+            models.Detail.objects.create(
+                title=d_title,
+                G_designer=designer,
+                G_developer=developer,
+                T_manager1=manager1,
+                T_manager2=manager2,
+                D_type_id=flag,
+                T_process_id=1,
+            )
+        else:
+            ret['status'] = False
+            ret['error'] = 'No title'
+    except Exception as e:
+        ret['status'] = False
+        ret['error'] = e
+    return HttpResponse(json.dumps(ret))
+
+
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
 def project(request, nid):
     prj_list = models.Project.objects.all()
     task_list = models.Task.objects.filter(P_task_id=nid).all()
     return render(request, 'welcome.html', {'prj_list': prj_list, 'task_list': task_list})
 
 
-# ÈÎÎñ¸üÐÂ½çÃæ
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½
 def task_detail(request, nid):
     if request.method == 'GET':
-        obj = models.Detail.objects.filter(id=nid).all()
-        return render(request, 'task_detail.html', {'obj': obj})
+        flag = nid
+        obj = models.Detail.objects.filter(D_type_id=nid).all()
+        return render(request, 'task_detail.html', {'obj': obj, 'flag':flag})
     else:
         pass
 
@@ -142,3 +179,6 @@ def project_delete(request):
                 })
 
             )
+
+
+

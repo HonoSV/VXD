@@ -12,6 +12,7 @@ class BigAdmin(admin.ModelAdmin):
 
     ]
 
+
 admin.site.register(User, BigAdmin)
 admin.site.register(Project, BigAdmin)
 admin.site.register(Task, BigAdmin)
