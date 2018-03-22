@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render, redirect, HttpResponse
 from TaskManagement import models
+from django.core import serializers
 import json
 # Create your views here.
 
@@ -204,4 +205,8 @@ def project_delete(request):
             )
 
 
-
+def temp_ajax(request):
+    flag = request.POST.get('flag')
+    tp = models.Detail.objects.filter(id=flag)
+    data = serializers.serialize("json", tp)
+    return HttpResponse(data)

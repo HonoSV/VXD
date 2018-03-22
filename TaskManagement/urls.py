@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^detail_ajax/', views.detail_ajax),
     url(r'^update_ajax/', views.update_ajax),
     url(r'^task_detail_edit-(?P<nid>\d+)/', views.task_detail_edit),
+    url(r'^temp_ajax/', views.temp_ajax),
 ]

@@ -138,29 +138,25 @@
         function edit(nid){
             var temp = document.getElementById('hid-id');
             temp.value = nid;
-            alert({{ obj }});
+
+            $.ajax({
+                url: "/taskmana/temp_ajax/",
+                type: "POST",
+                data: {
+                    'flag': nid
+                },
+                dataType: 'json',
+                success: function(data){
+                    {#alert(data[0].fields.title)#}
+                    document.getElementById('d_title').value = data[0].fields.title;
+                    document.getElementById('designer').value = data[0].fields.G_designer;
+                    document.getElementById('developer').value = data[0].fields.G_developer;
+                    document.getElementById('manager1').value = data[0].fields.T_manager1;
+                    document.getElementById('manager2').value = data[0].fields.T_manager2;
+                }
+            });
             document.getElementById('papa').classList.remove('hide');
             document.getElementById('mama').classList.remove('hide');
-{#            $('#update_submit').click(function(){#}
-{#                $.ajax({#}
-{#                    url: "/taskmana/update_ajax/",#}
-{#                    type: "POST",#}
-{#                    data: {#}
-{#                        'd_id': $('#hid-id').val(),#}
-{#                        'd_process': $('#sel').val(),#}
-{#                        'd_remarks': $('#d_remarks').val(),#}
-{#                    },#}
-{#                    success: function(data){#}
-{#                        var obj = JSON.parse(data);#}
-{#                        if(obj.status){#}
-{#                            location.reload();#}
-{#                        }else{#}
-{#                            alert(obj.error);#}
-{#                        }#}
-{##}
-{#                    }#}
-{#                });#}
-{#            });#}
         }
 
         $(function () {
