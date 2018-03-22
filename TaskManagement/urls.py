@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^task_delete/', views.task_delete),
     url(r'^project_delete/', views.project_delete),
     url(r'^detail_ajax/', views.detail_ajax),
+    url(r'^update_ajax/', views.update_ajax),
+    url(r'^task_detail_edit-(?P<nid>\d+)/', views.task_detail_edit),
 ]

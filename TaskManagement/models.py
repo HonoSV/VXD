@@ -27,7 +27,7 @@ class JustPlan(models.Model):
 
 class Detail(models.Model):
     id = models.IntegerField(primary_key=True)
-    D_type = models.ForeignKey('Task', on_delete=models.CASCADE)
+    D_type = models.ForeignKey('Task', null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     G_designer = models.CharField(max_length=64, null=True)
     G_developer = models.CharField(max_length=64, null=True)

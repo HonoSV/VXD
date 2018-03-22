@@ -45,47 +45,44 @@
 <body>
     <div class="base">
         <div class="title">
-            <h3>任务进度</h3>
+            <h3>任务编辑</h3>
         </div>
         <div class="button">
-            <input id="add_project" type="button" value="添加新任务" />
-            <a href="/taskmana/task_detail_edit-{{ flag }}">前往编辑</a>
+            <input id="delete_plan" type="button" value="删除选择项" />
         </div>
         <div class="excel">
             <table border="1" cellpadding="4px">
                 <thead>
                     <tr>
 {#                        <th>序号</th>#}
+                        <th>选择</th>
                         <th>标题</th>
                         <th>策划</th>
                         <th>开发</th>
                         <th>测试</th>
                         <th>测试</th>
-                        <th>测试状态</th>
-                        <th>备注</th>
 {#                        <th>更新时间</th>#}
-                        <th>Update</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for row in obj %}
                     <tr>
+                        <td align="center"><input type="checkbox" value={{ row.id }}/></td>
                         <td align="center" style="display: none">{{ row.id }}</td>
                         <td align="center">{{ row.title }}</td>
                         <td align="center">{{ row.G_designer }}</td>
                         <td align="center">{{ row.G_developer }}</td>
                         <td align="center">{{ row.T_manager1 }}</td>
                         <td align="center">{{ row.T_manager2 }}</td>
-                        <td align="center">{{ row.T_process.plan }}</td>
-                        <td align="center">{{ row.remarks }}</td>
 {#                        <td align="center">{{ row.remarks }}</td>#}
-                        <td align="center"><input type="button" value="更新进度" class="update-button" onclick="up({{ row.id }})"/></td>
+                        <td align="center"><input type="button" value="编辑" class="edit-button" onclick="edit({{ row.id }})"/></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-        <a href="/taskmana/project-1/">返回</a>
+        <a href="/taskmana/task_detail-{{ flag }}/">返回</a>
 
     </div>
 
@@ -93,7 +90,7 @@
     <div class="update hide" id="test">
         <form>
             <div class="main">
-                <input style="display: none" type="text" id="hid-id" />
+{#                <input style="display: none" type="text" id="hid-id" />#}
                 <lable>测试状态：</lable>
                 <select id="sel">
                     {% for i in process_list %}
@@ -114,19 +111,20 @@
             </div>
         </form>
     </div>
-    <div class="add-modal hide">
+    <div class="add-modal hide" id="mama">
         <form>
             <div class="main">
-                <input class="onlyD" type="text" placeholder="标题" name="d_title" id="d_title" />
+                <input style="display: none" type="text" id="hid-id" />
+                <input class="onlyD" type="text" placeholder="标题" name="d_title" id="d_title"  />
                 <input class="onlyD" type="text" placeholder="策划" name="designer" id="designer"/>
                 <input class="onlyD" type="text" placeholder="开发" name="developer" id="developer"/>
                 <input class="onlyD" type="text" placeholder="测试经理" name="manager1" id="manager1"/>
                 <input class="onlyD" type="text" placeholder="测试执行" name="manager2" id="manager2"/>
-                <input style="display: none" type="text" value="{{ flag }}" id="flag">
+
             </div>
             <div class="button-2">
                 <div class="sb-1">
-                    <input type="button" id="ajax_submit" value="添加"/>
+                    <input type="button" id="edit_submit" value="更新"/>
                 </div>
                 <div class="sb-2">
                     <input id="cancel" type="button" value="取消"/>
@@ -137,11 +135,32 @@
 
     <script src="/static/js/jquery.min.js"></script>
     <script>
-        function up(nid){
+        function edit(nid){
             var temp = document.getElementById('hid-id');
             temp.value = nid;
+            alert({{ obj }});
             document.getElementById('papa').classList.remove('hide');
-            document.getElementById('test').classList.remove('hide');
+            document.getElementById('mama').classList.remove('hide');
+{#            $('#update_submit').click(function(){#}
+{#                $.ajax({#}
+{#                    url: "/taskmana/update_ajax/",#}
+{#                    type: "POST",#}
+{#                    data: {#}
+{#                        'd_id': $('#hid-id').val(),#}
+{#                        'd_process': $('#sel').val(),#}
+{#                        'd_remarks': $('#d_remarks').val(),#}
+{#                    },#}
+{#                    success: function(data){#}
+{#                        var obj = JSON.parse(data);#}
+{#                        if(obj.status){#}
+{#                            location.reload();#}
+{#                        }else{#}
+{#                            alert(obj.error);#}
+{#                        }#}
+{##}
+{#                    }#}
+{#                });#}
+{#            });#}
         }
 
         $(function () {
