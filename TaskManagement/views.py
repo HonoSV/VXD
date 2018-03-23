@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from TaskManagement import models
 from django.core import serializers
+from django.db.models import Q
 import json
 # Create your views here.
 
@@ -144,20 +145,28 @@ def project(request, nid):
 
 # 锟斤拷锟斤拷锟斤拷陆锟斤拷锟�
 def task_detail(request, nid):
+    flag = nid
+    process_list = models.JustPlan.objects.all()
     if request.method == 'GET':
-        flag = nid
         obj = models.Detail.objects.filter(D_type_id=nid).all()
-        process_list = models.JustPlan.objects.all()
         return render(request, 'task_detail.html', {'obj': obj, 'flag': flag, 'process_list': process_list})
-    else:
-        pass
+    if request.method == 'POST':
+        sel_b = request.POST.get('sel_b')
+        print(sel_b)
+        if sel_b == '2':
+            temp = models.Detail.objects.filter(D_type_id=nid).all()
+            obj = temp.filter(T_process=5).all()
+            return render(request, 'task_detail.html', {'obj': obj, 'flag': flag, 'process_list': process_list})
+        if sel_b == '1':
+            temp = models.Detail.objects.filter(D_type_id=nid).all()
+            obj = temp.filter(~Q(T_process=5)).all()
+            return render(request, 'task_detail.html', {'obj': obj, 'flag': flag, 'process_list': process_list})
 
 
 def task_detail_edit(request, nid):
     if request.method == 'GET':
         flag = nid
         obj = models.Detail.objects.filter(D_type_id=nid).all()
-        print(obj)
         return render(request, 'task_detail_edit.html', {'obj': obj, 'flag': flag})
     else:
         pass
@@ -170,6 +179,28 @@ def task_delete(request):
         result = "Error"
         flag = models.Task.objects.filter(id=task_id).delete()
         if flag:
+            return HttpResponse(
+                json.dumps({
+                    "status": status
+                })
+            )
+        else:
+            return HttpResponse(
+                json.dumps({
+                    "status": result
+                })
+
+            )
+
+
+def plan_delete(request):
+    if request.method == "POST":
+        get_list = request.POST.getlist('t_list[]')   # 这里传过来的数组被深度序列化，需作如此处理
+        status = "Delete Success"
+        result = "Error"
+        if get_list:
+            for i in get_list:
+                models.Detail.objects.filter(id=i).delete()
             return HttpResponse(
                 json.dumps({
                     "status": status
@@ -210,3 +241,31 @@ def temp_ajax(request):
     tp = models.Detail.objects.filter(id=flag)
     data = serializers.serialize("json", tp)
     return HttpResponse(data)
+
+
+def change_ajax(request):
+    ret = {'status': True, 'error': None, 'data': None}
+    try:
+        d_title = request.POST.get('d_title')
+        designer = request.POST.get('designer')
+        developer = request.POST.get('developer')
+        manager1 = request.POST.get('manager1')
+        manager2 = request.POST.get('manager2')
+        flag = request.POST.get('flag')
+        if flag:
+            models.Detail.objects.filter(id=flag).update(
+                title=d_title,
+                G_designer=designer,
+                G_developer=developer,
+                T_manager1=manager1,
+                T_manager2=manager2,
+            )
+        else:
+            ret['status'] = False
+            ret['error'] = 'No ID'
+    except Exception as e:
+        ret['status'] = False
+        ret['error'] = 'something wrong'
+        print(e)
+    return HttpResponse(json.dumps(ret))
+

@@ -48,7 +48,7 @@
             <h3>任务编辑</h3>
         </div>
         <div class="button">
-            <input id="delete_plan" type="button" value="删除选择项" />
+            <input id="delete_plan" type="button" value="删除选择项" onclick="deleteM()"/>
         </div>
         <div class="excel">
             <table border="1" cellpadding="4px">
@@ -68,7 +68,7 @@
                 <tbody>
                 {% for row in obj %}
                     <tr>
-                        <td align="center"><input type="checkbox" value={{ row.id }}/></td>
+                        <td align="center"><input type="checkbox" value={{ row.id }} class="judge" /></td>
                         <td align="center" style="display: none">{{ row.id }}</td>
                         <td align="center">{{ row.title }}</td>
                         <td align="center">{{ row.G_designer }}</td>
@@ -87,30 +87,6 @@
     </div>
 
     <div class="shade hide" id="papa"></div>
-    <div class="update hide" id="test">
-        <form>
-            <div class="main">
-{#                <input style="display: none" type="text" id="hid-id" />#}
-                <lable>测试状态：</lable>
-                <select id="sel">
-                    {% for i in process_list %}
-                    <option value={{ i.id }}>{{ i.plan }}</option>
-                    {% endfor %}
-                </select>
-                <P>
-                    <input class="onlyD" id="d_remarks" type="text" placeholder="备注填写：X个bug，Y个待回归"/>
-                </P>
-            </div>
-        <div class="button-2">
-                <div class="sb-1">
-                    <input type="button" id="update_submit" value="更新"/>
-                </div>
-                <div class="sb-2">
-                    <input id="cancel_update" type="button" value="取消"/>
-                </div>
-            </div>
-        </form>
-    </div>
     <div class="add-modal hide" id="mama">
         <form>
             <div class="main">
@@ -124,7 +100,7 @@
             </div>
             <div class="button-2">
                 <div class="sb-1">
-                    <input type="button" id="edit_submit" value="更新"/>
+                    <input type="button" id="change_submit" value="更新"/>
                 </div>
                 <div class="sb-2">
                     <input id="cancel" type="button" value="取消"/>
@@ -135,6 +111,32 @@
 
     <script src="/static/js/jquery.min.js"></script>
     <script>
+        function deleteM() {
+            var a = document.getElementsByClassName('judge');
+            var list = [];
+            for(var i=0;i<a.length;i++){
+                if(a[i].checked){
+                    list.push(a[i].value);
+                }
+            }
+            if (window.confirm("您确认删除这些记录吗？")) {
+                $.ajax({
+                    url: '/taskmana/plan_delete/',
+                    type: 'POST',
+                    data: { "t_list": list },  //这里数组被深度序列化
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data["status"]);
+                        window.location.reload(true);//数据删除后，进行页面刷新
+                    }
+                });
+            } else {
+                alert("删除失败");
+            }
+        }
+
+
+
         function edit(nid){
             var temp = document.getElementById('hid-id');
             temp.value = nid;
@@ -160,26 +162,13 @@
         }
 
         $(function () {
-
-            $('#add_project').click(function () {
-                $('.shade,.add-modal').removeClass('hide');
-            });
-
-{#            $('.update-button').click(function () {#}
-{#                $('.shade,.update').removeClass('hide');#}
-{#            });#}
-
             $('#cancel').click(function () {
                 $('.shade,.add-modal').addClass('hide');
             });
 
-            $('#cancel_update').click(function () {
-                $('.shade,.update').addClass('hide');
-            });
-
-            $('#ajax_submit').click(function(){
+            $('#change_submit').click(function(){
                 $.ajax({
-                    url: "/taskmana/detail_ajax/",
+                    url: "/taskmana/change_ajax/",
                     type: "POST",
                     data: {
                         'd_title': $('#d_title').val(),
@@ -187,7 +176,7 @@
                         'developer': $('#developer').val(),
                         'manager1': $('#manager1').val(),
                         'manager2': $('#manager2').val(),
-                        'flag': $('#flag').val()
+                        'flag': $('#hid-id').val()
                     },
                     success: function(data){
                         var obj = JSON.parse(data);
@@ -201,26 +190,6 @@
                 });
             });
 
-            $('#update_submit').click(function(){
-                $.ajax({
-                    url: "/taskmana/update_ajax/",
-                    type: "POST",
-                    data: {
-                        'd_id': $('#hid-id').val(),
-                        'd_process': $('#sel').val(),
-                        'd_remarks': $('#d_remarks').val(),
-                    },
-                    success: function(data){
-                        var obj = JSON.parse(data);
-                        if(obj.status){
-                            location.reload();
-                        }else{
-                            alert(obj.error);
-                        }
-
-                    }
-                });
-            });
 
         });
     </script>

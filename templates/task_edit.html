@@ -29,17 +29,7 @@
             background: white;
             margin-left: -200px;
         }
-        .second{
-            position: fixed;
-            height: 300px;
-            width: 400px;
-            top: 300px;
-            left: 50%;
-            z-index: 102;
-            border: 1px solid red;
-            background: white;
-            margin-left: -200px;
-        }
+
     </style>
 </head>
 <body>
@@ -100,10 +90,6 @@
         </div>
         </form>
     </div>
-{#    <div class="second hide">#}
-{#        <input id="yes" type="submit" value="确定"/>#}
-{#        <input id="no" type="button" value="取消"/>#}
-{#    </div>#}
 
 
 
@@ -139,23 +125,6 @@
                 $('.shade,.add-modal').addClass('hide');
             });
 
-{#            $('#del').click(function () {#}
-{#                $('.shade,.second').removeClass('hide');#}
-{#            });#}
-{##}
-{#            $('#no').click(function () {#}
-{#                $('.shade,.second').addClass('hide');#}
-{#            });#}
-{##}
-{#            $('#yes').click(function(){#}
-{#                $.ajax({#}
-{#                    url: "/taskmana/delete_task/",#}
-{#                    type: "POST",#}
-{#                    data: {'task_id': $('#task_id').val()},#}
-{#                    success: function(data){#}
-{#                    }#}
-{#                });#}
-{#            });#}
 
             $('#ajax_submit').click(function(){
                 $.ajax({
