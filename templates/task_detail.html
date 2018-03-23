@@ -41,6 +41,9 @@
             background: white;
             margin-left: -200px;
         }
+        .color{
+            background-color: chartreuse;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +59,8 @@
             <div class="select">
                 <form method="POST">
                     <lable>测试状态：</lable>
-                    <select id="sel_b">
+                    <select name="sel_b">
+                        <option value="0">全部</option>
                         <option value="1">测试未通过</option>
                         <option value="2">测试通过</option>
                     </select>
@@ -82,8 +86,9 @@
                 </thead>
                 <tbody>
                 {% for row in obj %}
-                    <tr>
+                    <tr class="" id="c_color">
                         <td align="center" style="display: none">{{ row.id }}</td>
+                        <td align="center" style="display: none" class="f_color">{{ row.T_process.id }}</td>
                         <td align="center">{{ row.title }}</td>
                         <td align="center">{{ row.G_designer }}</td>
                         <td align="center">{{ row.G_developer }}</td>
@@ -131,11 +136,11 @@
     <div class="add-modal hide">
         <form>
             <div class="main">
-                <input class="onlyD" type="text" placeholder="标题" name="d_title" id="d_title" />
-                <input class="onlyD" type="text" placeholder="策划" name="designer" id="designer"/>
-                <input class="onlyD" type="text" placeholder="开发" name="developer" id="developer"/>
-                <input class="onlyD" type="text" placeholder="测试经理" name="manager1" id="manager1"/>
-                <input class="onlyD" type="text" placeholder="测试执行" name="manager2" id="manager2"/>
+                <input class="onlyD" type="text" placeholder="标题" name="d_title" id="d_title" style="height: 24px;"/>
+                <input class="onlyD" type="text" placeholder="策划" name="designer" id="designer" style="height: 24px;"/>
+                <input class="onlyD" type="text" placeholder="开发" name="developer" id="developer" style="height: 24px;"/>
+                <input class="onlyD" type="text" placeholder="测试经理" name="manager1" id="manager1" style="height: 24px;"/>
+                <input class="onlyD" type="text" placeholder="测试执行" name="manager2" id="manager2" style="height: 24px;"/>
                 <input style="display: none" type="text" value="{{ flag }}" id="flag">
             </div>
             <div class="button-2">
@@ -151,6 +156,13 @@
 
     <script src="/static/js/jquery.min.js"></script>
     <script>
+        $(function () {
+            var listen = $('.f_color').val();
+            if(listen === 5){
+                $('#c_color').addClass('color');
+            }
+        });
+
         function up(nid){
             var temp = document.getElementById('hid-id');
             temp.value = nid;

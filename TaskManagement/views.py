@@ -161,6 +161,9 @@ def task_detail(request, nid):
             temp = models.Detail.objects.filter(D_type_id=nid).all()
             obj = temp.filter(~Q(T_process=5)).all()
             return render(request, 'task_detail.html', {'obj': obj, 'flag': flag, 'process_list': process_list})
+        if sel_b == '0':
+            obj = models.Detail.objects.filter(D_type_id=nid).all()
+            return render(request, 'task_detail.html', {'obj': obj, 'flag': flag, 'process_list': process_list})
 
 
 def task_detail_edit(request, nid):
