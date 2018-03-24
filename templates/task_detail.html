@@ -46,7 +46,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="col()">
     <div class="base">
         <div class="zy0">
             <div class="title">
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="excel">
-            <table border="1" cellpadding="4px">
+            <table border="1" cellpadding="4px" id="tab">
                 <thead>
                     <tr>
 {#                        <th>序号</th>#}
@@ -156,12 +156,22 @@
 
     <script src="/static/js/jquery.min.js"></script>
     <script>
-        $(function () {
-            var listen = $('.f_color').val();
-            if(listen === 5){
-                $('#c_color').addClass('color');
+        function col(){
+            {#var listen = $('.f_color').val();#}
+            {#if(listen === 5){#}
+            {#    $('#c_color').addClass('color');#}
+
+            var table = document.getElementById("tab");
+            var len = table.rows.length;
+            var _row = table.rows;
+            for(var i = 0;i < len;i++){
+               var _cell = _row[i].cells;
+               var d=_cell[7].innerHTML;
+               if(d==="测试通过"){
+                   table.rows[i].style.backgroundColor = "#98FB98";
+               }
             }
-        });
+        }
 
         function up(nid){
             var temp = document.getElementById('hid-id');
